@@ -12,7 +12,26 @@ TODO...
 
 Thinking of CVA as the _semantic consistency_ or _semantic textual similarity_ (STS) between the Definition sentence with pairwise comparisons with its Item sentences.
 
-## References
+# Notebook List
+
+To understand this repository, work through the following Colab notebooks in order. The initial notebook "Setup" establishes your data environment and (optionally) save results to your Google Drive. These results can then be used subsequent notebooks that focus on specific analyses. 
+
+At the beginning of each notebook, there is the Model Parameters section, which sets key parameters to control subsequent cell processing like:
+
+- SBERT_MODEL: The pre-trained LLM fine-tuned from BERT. See [the many models available](https://huggingface.co/models?pipeline_tag=sentence-similarity&sort=downloads).
+
+- USE_GDRIVE: Flag to use gDrive if SetUp is customized. Otherwise, pre-generated repos data is used. Default is FALSE.
+
+- SAVE_PLOT: Flag to save analysis plots that have been customized. USE_GDRIVE must be TRUE. Default is FALSE.
+
+| Name | Description    | Colab Link |
+| -----| :-----------  | :--------: |
+| Create | IGNORE - Initial notebook to be deleted | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBert-Create.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
+| Setup | Loads the CVS dataset, splits 80/20 into train/validate, instantiates model, encodes Def-Item pairs, computes metrics, and checkpoints to gDrive | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-Setup.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
+| SimDist | Analyzes distribution of simitarity metrics for Def-Item pairs | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBert-SimDist.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
+| DefItem | Analyzes .... | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-DefItem.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
+| YourOwn | Analyzes something interesting! | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-XXX.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
+# References
 
 - TODO ref to CVS
   
@@ -25,19 +44,4 @@ Thinking of CVA as the _semantic consistency_ or _semantic textual similarity_ (
   - asdf
 
 - The initial notebook was derived from TDS article by Saketh Kotamraju, [_Intuitive Explaination of Sentence-BERT_](https://towardsdatascience.com/an-intuitive-explanation-of-sentence-bert-1984d144a868), 2022-01-23. Semantic consistency was defined as the cosine similiarity of two 384-dim latent vectors from S-BERT encodings. 
-
-  
-
-
-# Notebook List
-
-SetupTo use this repository, work through the following Colab notebooks. The initial notebook "Setup" setups your data environment and (optionally) save results to your Google Drive. These results can then be used subsequent notebooks, which focus on various analyses (as described below). 
-
-| Name | Description    | Colab Link |
-| -----| :-----------  | :--------: |
-| Create | Initiate notebook to be deleted | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBert-Create.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
-| Setup | Reads in the dataset, splits 80/20 into train/validate, and checkpoints to gDrive | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-Setup.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
-| SimDist | Examine simitarity metrics of Definition-Item pairs | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBert-SimDist.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
-| DefItem | asdfasdfsadf | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBert-DefItem.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
-|
 
