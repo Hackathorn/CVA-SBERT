@@ -1,4 +1,4 @@
-This repository explores an analysis approach for Content Validation Assessment (CVA) using S-BERT encodings and similarity metrics
+This repository explores an analysis approach for Content Validation Assessment (CVA) using S-BERT encodings and similarity metrics.
 
 # What is Content Validity Assessment (CVA)?
 
