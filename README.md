@@ -2,7 +2,8 @@ This repository explores an analysis approach for Content Validation Assessment 
 
 # What is Content Validity Assessment?
 
-TODO....
+Construct validity pertains to the degree to which the measure of a construct sufficiently measures the intended concept e.g., is free of measurement error. Ref: O
+
 
 # What is S-BERT? 
 
@@ -33,7 +34,8 @@ At the beginning of each notebook, there is the Model Parameters section, which 
 | YourOwn | Analyzes something interesting! | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-XXX.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
 # References
 
-- TODO ref to CVS
+- OLeary-Kelly & Vokurka, _Empirical Assessment of Construct Validity_, JOM, 1998.
+- KR Larsen & R Sharma, _Theory of Construct and Instrument Development Process: Supplementing Human Judgment with Natural Language Processing Techniques_, SSRN, 2020.
   
 - [Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks](https://arxiv.org/abs/1908.10084) describes "Sentence-BERT (SBERT), a modification of the pretrained BERT network that use siamese and triplet network structures to derive semantically meaningful sentence embeddings that can be compared using cosine-similarity."
 
