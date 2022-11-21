@@ -11,7 +11,7 @@ For CVA, analytic techniques (such as factor analysis and latent semantic analys
 
 # Semantic Consistency using S-BERT
 
-Specifically, this work approaches CVA as the _semantic consistency_ or _semantic textual similarity_ (STS) between the Definition sentence with pairwise comparisons with its Item sentences. Variations of Source-Definition-Item relationships are examined as whether they are semantically consistent. For example, is the definition of a conceptual variable on this survey questionaire similar (semantically) to each of its survey item questions. A person should remark, "Yes, this question does relate to discovering insights into this variable". 
+Specifically, this work approaches CVA as the _semantic consistency_ or _semantic textual similarity_ (STS) between the Definition sentence with pairwise comparisons with its Item sentences. Variations of Source-Definition-Item relationships are examined as whether they are semantically consistent. For example, is the definition of a conceptual variable on this survey questionaire semantically consistent to each of its survey item questions? A person should remark, "Yes, this survey question does relate to discovering insights into this social variable", thus being judged as reasonable for most humans. The assumption is that, since LLMs have been trained on huge corpus of human-generated text, it should perform this judgment at a Human-Level Performance (HLP). 
 
 # Notebook List
 
