@@ -1,21 +1,29 @@
 This repository explores an analysis approach for Content Validation Assessment (CVA) using S-BERT encodings and similarity metrics
 
-# What is Content Validity Assessment?
+# What is Content Validity Assessment (CVA)?
 
-Construct validity pertains to the degree to which the measure of a construct sufficiently measures the intended concept e.g., is free of measurement error. Ref: O
+With the field of sociometric measurements, **Construct Validity** pertains to the degree to which the measure of a construct (questionaire item) sufficiently measures the intended concept (conceptual variable), free of measurement error. [OLeary-Kelly & Vokurka, 1998]. Assessing this Construct Validity in specific studies has been topic of much research for several decades. 
 
 
 # What is S-BERT? 
 
-TODO...
+More analytic techniques (such as factor analysis and latent semantic analysis) have recently been used for CVA. This work explores the use of recent Natural Language Processing (NLP) techniques based on pretrained Large Language Models (LLM) like BERT. In particular, a variation called S-BERT or Sentence-BERT has gain popularity for embedding entire sentences (or paragraphs) into a latent (or embedding) space and computing various pairwise similarity metrics (like Cosine Similarity). 
 
 # Semantic Consistency using S-BERT
 
-Thinking of CVA as the _semantic consistency_ or _semantic textual similarity_ (STS) between the Definition sentence with pairwise comparisons with its Item sentences.
+Specifically, this work approaches CVA as the _semantic consistency_ or _semantic textual similarity_ (STS) between the Definition sentence with pairwise comparisons with its Item sentences.
 
 # Notebook List
 
 To understand this repository, work through the following Colab notebooks in order. The initial notebook "Setup" establishes your data environment and (optionally) save results to your Google Drive. These results can then be used subsequent notebooks that focus on specific analyses. 
+
+| Name | Description    | Colab Link |
+| -----| :-----------  | :--------: |
+| Setup | Loads the CVS dataset, splits 80/20 into train/validate, instantiates model, encodes Def-Item pairs, computes metrics, and checkpoints to gDrive | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-Setup.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
+| SimDist | Analyzes distribution of similarity metrics for Def-Item pairs | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-SimDist.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
+| DefItem | Analyzes .... | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-DefItem.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
+| Latent | Analyzes .... | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-Latent.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
+| YourOwn | Analyzes something interesting! | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-YourOwn.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
 
 At the beginning of each notebook, there is the Model Parameters section, which sets key parameters to control subsequent cell processing like:
 
@@ -25,13 +33,6 @@ At the beginning of each notebook, there is the Model Parameters section, which 
 
 - SAVE_PLOT: Flag to save analysis plots that have been customized. USE_GDRIVE must be TRUE. Default is FALSE.
 
-| Name | Description    | Colab Link |
-| -----| :-----------  | :--------: |
-| Create | IGNORE - Initial notebook to be deleted | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBert-Create.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
-| Setup | Loads the CVS dataset, splits 80/20 into train/validate, instantiates model, encodes Def-Item pairs, computes metrics, and checkpoints to gDrive | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-Setup.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
-| SimDist | Analyzes distribution of similarity metrics for Def-Item pairs | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-SimDist.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
-| DefItem | Analyzes .... | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-DefItem.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
-| YourOwn | Analyzes something interesting! | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-XXX.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
 # References
 
 - OLeary-Kelly & Vokurka, _Empirical Assessment of Construct Validity_, JOM, 1998.
