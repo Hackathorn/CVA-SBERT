@@ -28,11 +28,19 @@ To understand this repository, work through the following Colab notebooks in ord
 
 At the beginning of each notebook, there is the Model Parameters section, which sets key parameters to control subsequent cell processing. Normally accept the defaults, unless you want to customize the code and save the results to your Google drive. 
 
-- SBERT_MODEL: The pre-trained LLM fine-tuned from BERT. See [the many models available](https://huggingface.co/models?pipeline_tag=sentence-similarity&sort=downloads).
+- SBERT_MODEL: The pre-trained LLM fine-tuned from BERT. See [the many models available](https://huggingface.co/models?pipeline_tag=sentence-similarity&sort=downloads). Default is ```all-MiniLM-L6-v2```.
 
 - USE_GDRIVE: Flag to use gDrive if SetUp is customized. Otherwise, pre-generated repos data is used. Default is FALSE.
 
 - SAVE_PLOT: Flag to save analysis plots that have been customized. USE_GDRIVE must be TRUE. Default is FALSE.
+
+# How To Contribute 
+
+1. Browse/explore this repo. If any comments or suggestions, please submit an Issue. We are ALL learning! 
+2. Open the SetUp and DefItem notebooks in Colab. Play and break! And then, share your comments via an Issue. 
+3. Contribute to the documentation. What is NOT clear? What is WRONG? Submit an Issue.
+4. Contirbute to the code, especially if you have experience with S-BERT or any HuggingFace models. Real Pull-Requests will be a learning experience for us! 
+5. Finally, note the Project section, which is the roadmap. We would like to discuss over a Zoom (or like) session. 
 
 # References
 
@@ -44,8 +52,7 @@ At the beginning of each notebook, there is the Model Parameters section, which 
 - Overview of the [S-BERT community](https://www.sbert.net/):
 
   - In S-Bert documentation, Semantic Textual Similarity example is given [here](https://www.sbert.net/docs/usage/semantic_textual_similarity.html)
-  - adsf
-  - asdf
+  - 
 
 - The initial notebook was derived from TDS article by Saketh Kotamraju, [_Intuitive Explaination of Sentence-BERT_](https://towardsdatascience.com/an-intuitive-explanation-of-sentence-bert-1984d144a868), 2022-01-23. Semantic consistency was defined as the cosine similiarity of two 384-dim latent vectors from S-BERT encodings. 
 
