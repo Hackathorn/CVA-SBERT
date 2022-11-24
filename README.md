@@ -24,7 +24,7 @@ To understand this repository, work through the following Colab notebooks in ord
 | DefItem | Analyzes Def-to-Items cluster similarity within each Source-Definition (TBC) | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-DefItem.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
 | DefClus | Analyzes DefCluster-to-DefCluster similiarity within each Source (TBC) | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-DefClus.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
 | Latent | Analyzes 384-dim latent/embedding space using UMAP, etc (TBC) | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-Latent.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
-| YourOwn | Analyzes something interesting! (TBC) | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-YourOwn.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
+| YourOwn | Analyzes something interesting! | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-YourOwn.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
 
 At the beginning of each notebook, there is the Model Parameters section, which sets key parameters to control subsequent cell processing. Normally accept the defaults, unless you want to customize the code and save the results to your Google drive. 
 
