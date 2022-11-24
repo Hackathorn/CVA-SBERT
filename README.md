@@ -4,6 +4,7 @@ This repository explores an analysis approach for Content Validation Assessment 
 
 Within the field of sociometric survey questionaires, **Construct Validity** pertains to the degree to which the measure of a construct (questionaire item) sufficiently measures the intended concept (conceptual variable), free of measurement error. [OLeary-Kelly & Vokurka, 1998]. Assessing construct validity has been topic of much research using diverse approaches for several decades. 
 
+This project/repo is the result of an informal discussion with Prof. Kai Larsen at the Leeds School of Business, Univ of Colo, Boulder. The CVA dataset is part of their research and should be attributed to their work. Please cite... Citation-TBC
 
 # What is S-BERT? 
 
