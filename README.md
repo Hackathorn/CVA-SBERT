@@ -1,6 +1,6 @@
-This repository explores an analysis approach for Content Validation Assessment (CVA) using S-BERT encodings and similarity metrics.
+This repository explores an analysis approach for Construct Validation Assessment (CVA) using S-BERT encodings and similarity metrics.
 
-# What is Content Validity Assessment (CVA)?
+# What is Construct Validity Assessment (CVA)?
 
 Within the field of sociometric survey questionaires, **Construct Validity** pertains to the degree to which the measure of a construct (questionaire item) sufficiently measures the intended concept (conceptual variable), free of measurement error. [OLeary-Kelly & Vokurka, 1998]. Assessing construct validity has been topic of much research using diverse approaches for several decades. 
 
