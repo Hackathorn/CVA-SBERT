@@ -15,7 +15,7 @@ For CVA, analytic techniques (such as factor analysis and latent semantic analys
 
 Specifically, this work approaches CVA as the _semantic consistency_ or _semantic textual similarity_ (STS) between the Definition sentence with pairwise comparisons with its Item sentences. Variations of Source-Definition-Item relationships are examined as whether they are semantically consistent. 
 
-For example, is the definition of a conceptual variable on this survey questionaire semantically consistent to each of its survey item questions? A person should remark, "Yes, this survey question item does relate to discovering insights into this social variable", thus being judged as reasonable for most humans. The hypothesis is that, since this LLM has been pretrained on huge corpus of human-generated text, S-BERT has the potential to perform at a Human-Level Performance (HLP). :smile 
+For example, is the definition of a conceptual variable on this survey questionaire semantically consistent to each of its survey item questions? A person should remark, "Yes, this survey question item does relate to discovering insights into this social variable", thus being judged as reasonable for most humans. The hypothesis is that, since this LLM has been pretrained on huge corpus of human-generated text, S-BERT has the potential to perform at a Human-Level Performance (HLP). 😧
 
 # Notebook List
 
