@@ -13,11 +13,13 @@ For CVA, analytic techniques (such as factor analysis and latent semantic analys
 
 # Semantic Consistency using S-BERT
 
-Specifically, this work approaches CVA as the _semantic consistency_ or _semantic textual similarity_ (STS) between the Definition sentence with pairwise comparisons with its Item sentences. Variations of Source-Definition-Item relationships are examined as whether they are semantically consistent. For example, is the definition of a conceptual variable on this survey questionaire semantically consistent to each of its survey item questions? A person should remark, "Yes, this survey question does relate to discovering insights into this social variable", thus being judged as reasonable for most humans. The assumption is that, since LLMs have been trained on huge corpus of human-generated text, it should perform this judgment at a Human-Level Performance (HLP). 
+Specifically, this work approaches CVA as the _semantic consistency_ or _semantic textual similarity_ (STS) between the Definition sentence with pairwise comparisons with its Item sentences. Variations of Source-Definition-Item relationships are examined as whether they are semantically consistent. 
+
+For example, is the definition of a conceptual variable on this survey questionaire semantically consistent to each of its survey item questions? A person should remark, "Yes, this survey question item does relate to discovering insights into this social variable", thus being judged as reasonable for most humans. The hypothesis is that, since this LLM has been pretrained on huge corpus of human-generated text, S-BERT has the potential to perform at a Human-Level Performance (HLP). :smile 
 
 # Notebook List
 
-To understand this repository, work through the following Colab notebooks in order. The initial notebook "Setup" establishes your data environment, introduces you to the dataset, and (optionally) save results to your Google Drive. Then, the subsequent notebooks focus on specific analyses, as described. 
+To understand this repository, work through the following Colab notebooks in order. The initial notebook "Setup" establishes your data environment, introduces you to the dataset, and (optionally) saves results to your Google Drive. Then, the subsequent notebooks focus on specific analyses, as described. 
 
 | Name | Description    | Colab Link |
 | -----| :-----------  | :--------: |
@@ -26,7 +28,9 @@ To understand this repository, work through the following Colab notebooks in ord
 | DefItem | Analyzes Def-to-Items cluster similarity within each Source-Definition (TBC) | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-DefItem.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
 | DefClus | Analyzes DefCluster-to-DefCluster similiarity within each Source (TBC) | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-DefClus.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
 | Latent | Analyzes 384-dim latent/embedding space using UMAP, etc (TBC) | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-Latent.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
-| YourOwn | Analyzes something interesting! | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-YourOwn.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
+| YourOwn | Analyze something interesting! Provides a getting-start template. | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-YourOwn.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
+
+> NOTE: TBC means that the notebook is being developed and is likely to be incomplete and/or have errors. 
 
 At the beginning of each notebook, there is the Model Parameters section, which sets key parameters to control subsequent cell processing. Normally accept the defaults, unless you want to customize the code and save the results to your Google drive. 
 
