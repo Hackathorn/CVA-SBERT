@@ -1,9 +1,11 @@
-This repository explores an analysis approach for Content Validation Assessment (CVA) using S-BERT encodings and similarity metrics.
+This repository explores an analysis approach for Construct Validation Assessment (CVA) using S-BERT encodings and similarity metrics.
 
-# What is Content Validity Assessment (CVA)?
+# What is Construct Validity Assessment (CVA)?
 
 Within the field of sociometric survey questionaires, **Construct Validity** pertains to the degree to which the measure of a construct (questionaire item) sufficiently measures the intended concept (conceptual variable), free of measurement error. [OLeary-Kelly & Vokurka, 1998]. Assessing construct validity has been topic of much research using diverse approaches for several decades. 
 
+This project/repo is the result of an informal discussion with Prof. Kai Larsen at the Leeds School of Business, Univ of Colo, Boulder. The CVA dataset is part of their research and should be attributed to their work. Please cite... 
+- Citation -- To Be Completed
 
 # What is S-BERT? 
 
@@ -11,28 +13,41 @@ For CVA, analytic techniques (such as factor analysis and latent semantic analys
 
 # Semantic Consistency using S-BERT
 
-Specifically, this work approaches CVA as the _semantic consistency_ or _semantic textual similarity_ (STS) between the Definition sentence with pairwise comparisons with its Item sentences. Variations of Source-Definition-Item relationships are examined as whether they are semantically consistent. For example, is the definition of a conceptual variable on this survey questionaire semantically consistent to each of its survey item questions? A person should remark, "Yes, this survey question does relate to discovering insights into this social variable", thus being judged as reasonable for most humans. The assumption is that, since LLMs have been trained on huge corpus of human-generated text, it should perform this judgment at a Human-Level Performance (HLP). 
+Specifically, this work approaches CVA as the _semantic consistency_ or _semantic textual similarity_ (STS) between the Definition sentence with pairwise comparisons with its Item sentences. Variations of Source-Definition-Item relationships are examined as whether they are semantically consistent. 
+
+For example, is the definition of a conceptual variable on this survey questionaire semantically consistent to each of its survey item questions? A person should remark, "Yes, this survey question item does relate to discovering insights into this social variable", thus being judged as reasonable for most humans. The hypothesis is that, since this LLM has been pretrained on huge corpus of human-generated text, S-BERT has the potential to perform at a Human-Level Performance (HLP). 😧
 
 # Notebook List
 
-To understand this repository, work through the following Colab notebooks in order. The initial notebook "Setup" establishes your data environment, introduces you to the dataset, and (optionally) save results to your Google Drive. Then, the subsequent notebooks focus on specific analyses, as described. 
+To understand this repository, work through the following Colab notebooks in order. The initial notebook "Setup" establishes your data environment, introduces you to the dataset, and (optionally) saves results to your Google Drive. Then, the subsequent notebooks focus on specific analyses, as described. 
 
 | Name | Description    | Colab Link |
 | -----| :-----------  | :--------: |
 | Setup | Loads the CVS dataset, splits 80/20 into train/validate, instantiates model, encodes Def-Item pairs, computes metrics, and checkpoints to gDrive | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-SetUp.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
-| SimDist | Analyzes distribution of similarity metrics for all Definition-Item pairs | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-SimDist.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
+| SimDist | Analyzes distribution of similarity metrics for all Definition-Item pairs. Uses only train_data. | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-SimDist.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
+| ROC-AUC | Analyzes ROC & AUC using similarity metrics for all Definition-Item pairs. Uses only valid_data. | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-ROC-AUC.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
 | DefItem | Analyzes Def-to-Items cluster similarity within each Source-Definition (TBC) | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-DefItem.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
 | DefClus | Analyzes DefCluster-to-DefCluster similiarity within each Source (TBC) | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-DefClus.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
 | Latent | Analyzes 384-dim latent/embedding space using UMAP, etc (TBC) | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-Latent.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
-| YourOwn | Analyzes something interesting! (TBC) | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-YourOwn.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
+| YourOwn | Analyze something interesting! Provides a getting-start template. | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-YourOwn.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
+
+> NOTE: TBC means that the notebook is being developed and is likely to be incomplete and/or have errors. 
 
 At the beginning of each notebook, there is the Model Parameters section, which sets key parameters to control subsequent cell processing. Normally accept the defaults, unless you want to customize the code and save the results to your Google drive. 
 
-- SBERT_MODEL: The pre-trained LLM fine-tuned from BERT. See [the many models available](https://huggingface.co/models?pipeline_tag=sentence-similarity&sort=downloads).
+- SBERT_MODEL: The pre-trained LLM fine-tuned from BERT. See [the many models available](https://huggingface.co/models?pipeline_tag=sentence-similarity&sort=downloads). Default is ```all-MiniLM-L6-v2```.
 
 - USE_GDRIVE: Flag to use gDrive if SetUp is customized. Otherwise, pre-generated repos data is used. Default is FALSE.
 
 - SAVE_PLOT: Flag to save analysis plots that have been customized. USE_GDRIVE must be TRUE. Default is FALSE.
+
+# How To Contribute 
+
+1. Browse/explore this repo. If any comments or suggestions, please submit an Issue. We are ALL learning! 
+2. Open the SetUp and DefItem notebooks in Colab. Play and break! And then, share your comments via an Issue. 
+3. Contribute to the documentation. What is NOT clear? What is WRONG? Submit an Issue.
+4. Contirbute to the code, especially if you have experience with S-BERT or any HuggingFace models. Real Pull-Requests will be a learning experience for us! 
+5. Finally, note the Project section, which is the roadmap. We would like to discuss over a Zoom (or like) session. 
 
 # References
 
@@ -44,8 +59,7 @@ At the beginning of each notebook, there is the Model Parameters section, which 
 - Overview of the [S-BERT community](https://www.sbert.net/):
 
   - In S-Bert documentation, Semantic Textual Similarity example is given [here](https://www.sbert.net/docs/usage/semantic_textual_similarity.html)
-  - adsf
-  - asdf
+  - 
 
 - The initial notebook was derived from TDS article by Saketh Kotamraju, [_Intuitive Explaination of Sentence-BERT_](https://towardsdatascience.com/an-intuitive-explanation-of-sentence-bert-1984d144a868), 2022-01-23. Semantic consistency was defined as the cosine similiarity of two 384-dim latent vectors from S-BERT encodings. 
 
