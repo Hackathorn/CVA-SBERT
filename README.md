@@ -23,7 +23,7 @@ To understand this repository, work through the following Colab notebooks in ord
 
 | Name | Description    | Colab Link |
 | -----| :-----------  | :--------: |
-| Setup | Loads the CVS dataset, splits 80/20 into train/validate, instantiates model, encodes Def-Item pairs, computes metrics, and checkpoints to gDrive | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-SetUp.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
+| Setup | Loads the CVA dataset, instantiates model, encodes Def-Item pairs, computes metrics, splits 80/20 into train/validate, and checkpoints to gDrive | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-SetUp.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
 | SimDist | Analyzes distribution of similarity metrics for all Definition-Item pairs. Uses only train_data. | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-SimDist.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
 | ROC-AUC | Analyzes ROC & AUC using similarity metrics for all Definition-Item pairs. Uses only valid_data. | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-ROC-AUC.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
 | DefItem | Analyzes Def-to-Items cluster similarity within each Source-Definition (TBC) | <a href="https://colab.research.google.com/github/Hackathorn/CVA-SBERT/blob/main/notebooks/CVA-using-SBERT-DefItem.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a> |
@@ -38,6 +38,8 @@ At the beginning of each notebook, there is the Model Parameters section, which 
 - SBERT_MODEL: The pre-trained LLM fine-tuned from BERT. See [the many models available](https://huggingface.co/models?pipeline_tag=sentence-similarity&sort=downloads). Default is ```all-MiniLM-L6-v2```.
 
 - USE_GDRIVE: Flag to use gDrive if SetUp is customized. Otherwise, pre-generated repos data is used. Default is FALSE.
+
+- CLEAN_TEXT: Default is TRUE implying that text string for Definitions and Items is changed by removing punctuation chars, eliminating whitespace, etc.
 
 - SAVE_PLOT: Flag to save analysis plots that have been customized. USE_GDRIVE must be TRUE. Default is FALSE.
 
