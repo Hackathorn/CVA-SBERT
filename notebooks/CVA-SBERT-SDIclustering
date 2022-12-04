@@ -1,0 +1,549 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "source": [
+        "# Analyzes cluster similarity within Source-Definition-Item hierarchy\n",
+        "\n",
+        "1. Setup analysis environment and load dataframes\n",
+        "1. Create working df as 3-level grouping using only Target=1\n",
+        "1. Compute counts/mean/var aggregations for top levels\n",
+        "1. Analyze those cluster similarity aggregations"
+      ],
+      "metadata": {
+        "id": "Ps4LDam0XMic"
+      }
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "AZSRG_0rm3t9"
+      },
+      "source": [
+        "# Setup Environment"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "## Set Notebook Parameters"
+      ],
+      "metadata": {
+        "id": "v4HpIXy15osX"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# use gDrive if you previously saved train_data, etc.\n",
+        "# otherwise, use pre-generated data from repos (Default)\n",
+        "USE_GDRIVE = False\n",
+        "\n",
+        "# save analysis plots if customized\n",
+        "SAVE_PLOT = False"
+      ],
+      "metadata": {
+        "id": "xLjXg6zv5tUY"
+      },
+      "execution_count": 1,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "hzoUz1FwWVvd"
+      },
+      "source": [
+        "## Import various packages\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 2,
+      "metadata": {
+        "id": "bok6iQwnoy_f"
+      },
+      "outputs": [],
+      "source": [
+        "import pandas as pd\n",
+        "import numpy as np\n",
+        "\n",
+        "import os.path\n",
+        "from os import path\n",
+        "from time import strftime, localtime\n",
+        "from google.colab import drive"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "zd1FLW2gVfAa"
+      },
+      "source": [
+        "## Clone CVA-SBERT GitHub or mount gDrive"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 3,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 179
+        },
+        "id": "vdnQd5jXVotB",
+        "outputId": "4db88b11-5796-453a-b6c2-a5c5a67785b4"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Cloning into 'CVA-SBERT'...\n",
+            "remote: Enumerating objects: 375, done.\u001b[K\n",
+            "remote: Counting objects: 100% (213/213), done.\u001b[K\n",
+            "remote: Compressing objects: 100% (94/94), done.\u001b[K\n",
+            "remote: Total 375 (delta 139), reused 184 (delta 119), pack-reused 162\u001b[K\n",
+            "Receiving objects: 100% (375/375), 115.89 MiB | 11.54 MiB/s, done.\n",
+            "Resolving deltas: 100% (240/240), done.\n",
+            "Checking out files: 100% (22/22), done.\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "'/content/CVA-SBERT/data/SetUp_Data'"
+            ],
+            "application/vnd.google.colaboratory.intrinsic+json": {
+              "type": "string"
+            }
+          },
+          "metadata": {},
+          "execution_count": 3
+        }
+      ],
+      "source": [
+        "if USE_GDRIVE:\n",
+        "    drive.mount('/content/drive')               # mount YOUR gDrive\n",
+        "\n",
+        "    # Path to data -- change for YOUR specific Analysis folder\n",
+        "    path = '/content/drive/MyDrive/CVA-SBERT/Analysis-20221203-190207' ### CHANGE!!!\n",
+        "\n",
+        "else:\n",
+        "    !git clone https://github.com/Hackathorn/CVA-SBERT  # clone repos\n",
+        "\n",
+        "    # Path to data in repository\n",
+        "    path = '/content/CVA-SBERT/data/SetUp_Data'\n",
+        "\n",
+        "path"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Load dataframes and create working df as simply ```df```"
+      ],
+      "metadata": {
+        "id": "2hm3JjxQhrY-"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# load previous dataframes from SetUp notebook\n",
+        "CVA_df = pd.read_pickle(path + '/CVA_df.pkl')\n",
+        "token_df = pd.read_pickle(path + '/token_df.pkl')\n",
+        "\n",
+        "# use only 'good' data\n",
+        "df = CVA_df[CVA_df.Target == 1]\n",
+        "# remove unneeded columns\n",
+        "df = df.drop(columns = ['Target', 'Definition', 'Item', 'is_train'])\n",
+        "# rename columns to short consist names\n",
+        "df.rename(columns={\"Source\": \"S\", \"Def_token\": \"D\", \"Item_token\": 'I'}, inplace=True)\n",
+        "df.rename(columns={\"Cos_Sim\": \"Csim\", \"Euc_Sim\": \"Esim\"}, inplace=True)\n",
+        "\n",
+        "df"
+      ],
+      "metadata": {
+        "id": "cgpcSDJqWC1f",
+        "outputId": "111e62db-9f26-4a77-f004-e6a1f23f4041",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 424
+        }
+      },
+      "execution_count": 13,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "       Index      S     D      I      Csim      Esim\n",
+              "0          0   2978  7060   2240  0.185577  1.276263\n",
+              "6          6   3169  5361   5119  0.414065  1.082529\n",
+              "8          8   2367  9846   4760  0.253170  1.222154\n",
+              "13        13  12426  9358   7035  0.488197  1.011734\n",
+              "18        18  13903  7165   4199  0.240013  1.232872\n",
+              "...      ...    ...   ...    ...       ...       ...\n",
+              "28069  28069   1915  2576   2574  0.624945  0.866089\n",
+              "28071  28071  12822  2404  11294  0.169479  1.288814\n",
+              "28072  28072   3350  6839   8420  0.583409  0.912789\n",
+              "28074  28074   2361  6453  10551  0.383094  1.110771\n",
+              "28075  28075   3093  1722   1749  0.346923  1.142871\n",
+              "\n",
+              "[14036 rows x 6 columns]"
+            ],
+            "text/html": [
+              "\n",
+              "  <div id=\"df-735ec300-3a1f-4335-a164-494a0a3c3042\">\n",
+              "    <div class=\"colab-df-container\">\n",
+              "      <div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>Index</th>\n",
+              "      <th>S</th>\n",
+              "      <th>D</th>\n",
+              "      <th>I</th>\n",
+              "      <th>Csim</th>\n",
+              "      <th>Esim</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>0</th>\n",
+              "      <td>0</td>\n",
+              "      <td>2978</td>\n",
+              "      <td>7060</td>\n",
+              "      <td>2240</td>\n",
+              "      <td>0.185577</td>\n",
+              "      <td>1.276263</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>6</th>\n",
+              "      <td>6</td>\n",
+              "      <td>3169</td>\n",
+              "      <td>5361</td>\n",
+              "      <td>5119</td>\n",
+              "      <td>0.414065</td>\n",
+              "      <td>1.082529</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>8</th>\n",
+              "      <td>8</td>\n",
+              "      <td>2367</td>\n",
+              "      <td>9846</td>\n",
+              "      <td>4760</td>\n",
+              "      <td>0.253170</td>\n",
+              "      <td>1.222154</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>13</th>\n",
+              "      <td>13</td>\n",
+              "      <td>12426</td>\n",
+              "      <td>9358</td>\n",
+              "      <td>7035</td>\n",
+              "      <td>0.488197</td>\n",
+              "      <td>1.011734</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>18</th>\n",
+              "      <td>18</td>\n",
+              "      <td>13903</td>\n",
+              "      <td>7165</td>\n",
+              "      <td>4199</td>\n",
+              "      <td>0.240013</td>\n",
+              "      <td>1.232872</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>...</th>\n",
+              "      <td>...</td>\n",
+              "      <td>...</td>\n",
+              "      <td>...</td>\n",
+              "      <td>...</td>\n",
+              "      <td>...</td>\n",
+              "      <td>...</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>28069</th>\n",
+              "      <td>28069</td>\n",
+              "      <td>1915</td>\n",
+              "      <td>2576</td>\n",
+              "      <td>2574</td>\n",
+              "      <td>0.624945</td>\n",
+              "      <td>0.866089</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>28071</th>\n",
+              "      <td>28071</td>\n",
+              "      <td>12822</td>\n",
+              "      <td>2404</td>\n",
+              "      <td>11294</td>\n",
+              "      <td>0.169479</td>\n",
+              "      <td>1.288814</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>28072</th>\n",
+              "      <td>28072</td>\n",
+              "      <td>3350</td>\n",
+              "      <td>6839</td>\n",
+              "      <td>8420</td>\n",
+              "      <td>0.583409</td>\n",
+              "      <td>0.912789</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>28074</th>\n",
+              "      <td>28074</td>\n",
+              "      <td>2361</td>\n",
+              "      <td>6453</td>\n",
+              "      <td>10551</td>\n",
+              "      <td>0.383094</td>\n",
+              "      <td>1.110771</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>28075</th>\n",
+              "      <td>28075</td>\n",
+              "      <td>3093</td>\n",
+              "      <td>1722</td>\n",
+              "      <td>1749</td>\n",
+              "      <td>0.346923</td>\n",
+              "      <td>1.142871</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "<p>14036 rows × 6 columns</p>\n",
+              "</div>\n",
+              "      <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-735ec300-3a1f-4335-a164-494a0a3c3042')\"\n",
+              "              title=\"Convert this dataframe to an interactive table.\"\n",
+              "              style=\"display:none;\">\n",
+              "        \n",
+              "  <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\"viewBox=\"0 0 24 24\"\n",
+              "       width=\"24px\">\n",
+              "    <path d=\"M0 0h24v24H0V0z\" fill=\"none\"/>\n",
+              "    <path d=\"M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z\"/><path d=\"M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z\"/>\n",
+              "  </svg>\n",
+              "      </button>\n",
+              "      \n",
+              "  <style>\n",
+              "    .colab-df-container {\n",
+              "      display:flex;\n",
+              "      flex-wrap:wrap;\n",
+              "      gap: 12px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert {\n",
+              "      background-color: #E8F0FE;\n",
+              "      border: none;\n",
+              "      border-radius: 50%;\n",
+              "      cursor: pointer;\n",
+              "      display: none;\n",
+              "      fill: #1967D2;\n",
+              "      height: 32px;\n",
+              "      padding: 0 0 0 0;\n",
+              "      width: 32px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert:hover {\n",
+              "      background-color: #E2EBFA;\n",
+              "      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);\n",
+              "      fill: #174EA6;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert {\n",
+              "      background-color: #3B4455;\n",
+              "      fill: #D2E3FC;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert:hover {\n",
+              "      background-color: #434B5C;\n",
+              "      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);\n",
+              "      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));\n",
+              "      fill: #FFFFFF;\n",
+              "    }\n",
+              "  </style>\n",
+              "\n",
+              "      <script>\n",
+              "        const buttonEl =\n",
+              "          document.querySelector('#df-735ec300-3a1f-4335-a164-494a0a3c3042 button.colab-df-convert');\n",
+              "        buttonEl.style.display =\n",
+              "          google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
+              "\n",
+              "        async function convertToInteractive(key) {\n",
+              "          const element = document.querySelector('#df-735ec300-3a1f-4335-a164-494a0a3c3042');\n",
+              "          const dataTable =\n",
+              "            await google.colab.kernel.invokeFunction('convertToInteractive',\n",
+              "                                                     [key], {});\n",
+              "          if (!dataTable) return;\n",
+              "\n",
+              "          const docLinkHtml = 'Like what you see? Visit the ' +\n",
+              "            '<a target=\"_blank\" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'\n",
+              "            + ' to learn more about interactive tables.';\n",
+              "          element.innerHTML = '';\n",
+              "          dataTable['output_type'] = 'display_data';\n",
+              "          await google.colab.output.renderOutput(dataTable, element);\n",
+              "          const docLink = document.createElement('div');\n",
+              "          docLink.innerHTML = docLinkHtml;\n",
+              "          element.appendChild(docLink);\n",
+              "        }\n",
+              "      </script>\n",
+              "    </div>\n",
+              "  </div>\n",
+              "  "
+            ]
+          },
+          "metadata": {},
+          "execution_count": 13
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "RESULTS...\n",
+        "- Note half of the rows (approx) for eliminating Target=0 Def-Items\n",
+        "- Nice and compact"
+      ],
+      "metadata": {
+        "id": "6cVYaaEWgbGH"
+      }
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "Jpc-anfNgFzt"
+      },
+      "source": [
+        "# Group as 3-level S-D-I hierarchy"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "## Next piece of this step"
+      ],
+      "metadata": {
+        "id": "kgfBuNTpcZ6Z"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# some code"
+      ],
+      "metadata": {
+        "id": "hOVupb6lt9xO"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "RESULTS...\n",
+        "- Some insights........"
+      ],
+      "metadata": {
+        "id": "vF0EBJehgVpA"
+      }
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "# Save analysis results to your gDrive - OPTIONAL"
+      ],
+      "metadata": {
+        "id": "ix6C4m6lMI4H"
+      }
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Mount gDrive and create timestamped Experiment Folder"
+      ],
+      "metadata": {
+        "id": "m9mE0i6lNk6L"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "drive.mount('/content/drive')   # ignore warning if already mounted\n",
+        "\n",
+        "BASE_PATH = '/content/drive/MyDrive/CVA-SBERT/'\n",
+        "EXP_PATH = BASE_PATH + 'Analysis-' + strftime(\"%Y%m%d-%H%M%S\", localtime())\n",
+        "\n",
+        "if path.exists(BASE_PATH) == False:\n",
+        "    os.mkdir(BASE_PATH)\n",
+        "if path.exists(EXP_PATH) == False:\n",
+        "    os.mkdir(EXP_PATH)"
+      ],
+      "metadata": {
+        "id": "-iZJ4HC0MSa7"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "Save dataframes or other results to Experiment Folder"
+      ],
+      "metadata": {
+        "id": "Ec7wkgVtNuBd"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# save initial two dataframes\n",
+        "CVA_df.to_pickle(EXP_PATH + '/CVA_df.pkl')\n",
+        "token_df.to_pickle(EXP_PATH + '/token_df.pkl')\n",
+        "\n",
+        "# ...or other saving of other results, like plots\n",
+        "#"
+      ],
+      "metadata": {
+        "id": "FdvEn6tMOKMy"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ],
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "toc_visible": true
+    },
+    "kernelspec": {
+      "display_name": "Python 3.8.12 ('ESSL')",
+      "language": "python",
+      "name": "python3"
+    },
+    "language_info": {
+      "name": "python",
+      "version": "3.8.12"
+    },
+    "vscode": {
+      "interpreter": {
+        "hash": "033f8c6fda077bd21b7ae1b6f69c8e3d2300139e3a7502197592234d857a2a7b"
+      }
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 0
+}
